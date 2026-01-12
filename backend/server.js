@@ -28,8 +28,7 @@ connectToMongo();
 // Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/expenses', require('./routes/expenses'));
-app.use('/api/categories', require('./routes/categories'));
-
+app.use('/api/categories', require('./routes/categoryRoutes'));
 // Health Check (For the Cloud to know we are alive)
 app.get('/', (req, res) => {
   res.send("Expense Tracker Backend is Running!");
