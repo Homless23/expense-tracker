@@ -218,8 +218,29 @@ const allCategories = ["Food", "Transport", "Entertainment", "Bills", "Health", 
                 </div>
                 {isCreatingCat && (
                     <div style={{display:'flex', gap:'10px', marginBottom:'1rem'}}>
-                        <input className="modern-input" placeholder="Category Name" value={newCat} onChange={e => setNewCat(e.target.value)} />
-                        <button onClick={addNewCategory} style={{background:'var(--primary)', color:'white', border:'none', borderRadius:'8px', padding:'0 1rem', cursor:'pointer'}}>✓</button>
+                        {/* FIX: added flex:1 so it shares space, and minWidth to button so it doesn't vanish */}
+                        <input 
+                            className="modern-input" 
+                            placeholder="Category Name" 
+                            value={newCat} 
+                            onChange={e => setNewCat(e.target.value)}
+                            style={{flex: 1}} 
+                        />
+                        <button 
+                            onClick={addNewCategory} 
+                            style={{
+                                background:'var(--primary)', 
+                                color:'white', 
+                                border:'none', 
+                                borderRadius:'8px', 
+                                padding:'0 1.5rem', 
+                                cursor:'pointer',
+                                fontSize: '1.2rem',
+                                minWidth: '60px' 
+                            }}
+                        >
+                            ✓
+                        </button>
                     </div>
                 )}
                 <form onSubmit={handleSubmit} style={{display:'flex', flexDirection:'column', gap:'0.8rem'}}>
