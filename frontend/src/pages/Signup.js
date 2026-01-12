@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { API_URL } from '../config'; // Import Cloud URL
 import './Auth.css';
 
 function Signup() {
@@ -12,27 +13,20 @@ function Signup() {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/auth/register', { name, email, password });
+      await axios.post(`${API_URL}/api/auth/register`, { name, email, password });
       alert("Account created! Please log in.");
       navigate('/login');
 
     } catch (err) {
-      console.error("Signup Error:", err); // Log to console for debugging
-
+      console.error("Signup Error:", err); 
       if (err.response) {
-        // Case 1: Server Validation Error (e.g., "Email exists")
         if (err.response.data && err.response.data.error) {
             alert(err.response.data.error);
-        } 
-        // Case 2: Array of Errors (e.g., "Password too short")
-        else if (err.response.data && err.response.data.errors) {
+        } else if (err.response.data && err.response.data.errors) {
             alert(err.response.data.errors[0].msg);
-        }
-        // Case 3: Server Crash (500 Internal Server Error)
-        else if (typeof err.response.data === 'string') {
+        } else if (typeof err.response.data === 'string') {
             alert("Server Error: " + err.response.data); 
-        } 
-        else {
+        } else {
             alert("Signup failed: Server responded with status " + err.response.status);
         }
       } else {
@@ -49,30 +43,16 @@ function Signup() {
         
         <form onSubmit={handleSignup} className="auth-form">
           <input 
-            type="text" 
-            className="auth-input"
-            placeholder="Full Name" 
-            value={name} 
-            onChange={(e) => setName(e.target.value)} 
-            required 
-            minLength={3}
+            type="text" className="auth-input" placeholder="Full Name" 
+            value={name} onChange={(e) => setName(e.target.value)} required minLength={3}
           />
           <input 
-            type="email" 
-            className="auth-input"
-            placeholder="Email Address" 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
-            required 
+            type="email" className="auth-input" placeholder="Email Address" 
+            value={email} onChange={(e) => setEmail(e.target.value)} required 
           />
           <input 
-            type="password" 
-            className="auth-input"
-            placeholder="Password (Min 5 chars)" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-            required 
-            minLength={5} 
+            type="password" className="auth-input" placeholder="Password (Min 5 chars)" 
+            value={password} onChange={(e) => setPassword(e.target.value)} required minLength={5} 
           />
           <button type="submit" className="auth-btn">Get Started</button>
         </form>
@@ -84,5 +64,4 @@ function Signup() {
     </div>
   );
 }
-
 export default Signup;
