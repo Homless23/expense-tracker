@@ -216,33 +216,39 @@ const allCategories = ["Food", "Transport", "Entertainment", "Bills", "Health", 
                     <h3>{editId ? 'Edit Transaction' : 'New Transaction'}</h3>
                     <button onClick={() => setIsCreatingCat(!isCreatingCat)} style={{border:'none', background:'none', color:'var(--primary)', cursor:'pointer', fontSize:'0.85rem'}}>{isCreatingCat ? 'Cancel' : '+ Category'}</button>
                 </div>
-                {isCreatingCat && (
-                    <div style={{display:'flex', gap:'10px', marginBottom:'1rem'}}>
-                        {/* FIX: added flex:1 so it shares space, and minWidth to button so it doesn't vanish */}
+               {isCreatingCat && (
+                    <div style={{display:'flex', alignItems: 'center', gap:'10px', marginBottom:'1rem'}}>
                         <input 
                             className="modern-input" 
                             placeholder="Category Name" 
                             value={newCat} 
                             onChange={e => setNewCat(e.target.value)}
-                            style={{flex: 1}} 
+                            // FIX: flex: 1 makes it take AVAILABLE space, not ALL space
+                            style={{ flex: 1, minWidth: 0 }} 
                         />
                         <button 
-                            onClick={addNewCategory} 
+                            type="button" // Important: Prevents it from accidentally submitting the main form
+                            onClick={() => { console.log("Clicked!"); addNewCategory(); }} 
                             style={{
                                 background:'var(--primary)', 
                                 color:'white', 
                                 border:'none', 
                                 borderRadius:'8px', 
-                                padding:'0 1.5rem', 
+                                height: '45px', // Fixed height matching the input
+                                width: '50px',  // Fixed width
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
                                 cursor:'pointer',
                                 fontSize: '1.2rem',
-                                minWidth: '60px' 
+                                flexShrink: 0 // FIX: Prevents the button from being squashed
                             }}
                         >
                             ✓
                         </button>
                     </div>
                 )}
+              
                 <form onSubmit={handleSubmit} style={{display:'flex', flexDirection:'column', gap:'0.8rem'}}>
                     <input className="modern-input" placeholder="What did you buy?" value={form.title} onChange={e => setForm({...form, title: e.target.value})} required />
                     <div className="form-row">
